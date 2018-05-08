@@ -1,8 +1,21 @@
+%if 0%{?rhel} < 8
+%define rebar_eunit(C:) \
+        CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ; \
+        CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ; \
+        FFLAGS="${FFLAGS:-%optflags%{?_fmoddir: -I%_fmoddir}}" ; export FFLAGS ; \
+        FCFLAGS="${FCFLAGS:-%optflags%{?_fmoddir: -I%_fmoddir}}" ; export FCFLAGS ; \
+        %{?__global_ldflags:LDFLAGS="${LDFLAGS:-%__global_ldflags}" ; export LDFLAGS ;} \
+        VSN="%{version}" ; export VSN ; \
+        REBAR_VSN_CACHE_FILE="%{_builddir}/%{buildsubdir}/vsn.cache" ; export REBAR_VSN_CACHE_FILE ; \
+        REBAR_DEPS_PREFER_LIBS="TRUE" ; export REBAR_DEPS_PREFER_LIBS ; \
+        %__rebar eunit skip_deps=true -vv %{-C:-C %{-C*}} \
+%{nil}
+%endif
 %define sufix 16
 #Install a side of system package
 Name:           elixir%{sufix}
 Version:        1.6.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A modern approach to programming for the Erlang VM
 
 Group:          Development/Languages
@@ -13,6 +26,7 @@ URL:            http://elixir-lang.org/
 Source0:        https://github.com/elixir-lang/elixir/archive/v%{version}/%{name}-%{version}.tar.gz
 #BuildArch:      noarch
 BuildRequires:  erlang-rebar
+BuildRequires:  erlang-rpm-macros
 BuildRequires:  git
 Requires: erlang-compiler
 Requires: erlang-crypto
@@ -68,6 +82,9 @@ done
 
 
 %changelog
+* Sat May 05 2018 Jerzy Drozdz <rpmbuilder@jdsieci.pl> - 1.6.4-2
+- Fixed missing build dependency
+
 * Sat May 05 2018 Jerzy Drozdz <rpmbuilder@jdsieci.pl> - 1.6.4-1
 - New Upstream release
 - Installing aside of system package
