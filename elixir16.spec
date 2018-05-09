@@ -1,4 +1,4 @@
-%if 0%{?rhel} < 8
+%if 0%{?rhel} && 0%{?rhel} < 8
 %define rebar_eunit(C:) \
         CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ; \
         CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ; \
