@@ -11,10 +11,10 @@
         %__rebar eunit skip_deps=true -vv %{-C:-C %{-C*}} \
 %{nil}
 %endif
-%define sufix 16
+%define sufix 17
 #Install a side of system package
 Name:           elixir%{sufix}
-Version:        1.6.6
+Version:        1.7.3
 Release:        1%{?dist}
 Summary:        A modern approach to programming for the Erlang VM
 
@@ -82,8 +82,11 @@ done
 
 
 %changelog
+* Sun Sep 02 2018 Jerzy Drozdz <rpmbuilder@jdsieci.pl> - 1.7.3-1
+- Update to 1.7 release
+
 * Sun Sep 02 2018 Jerzy Drozdz <rpmbuilder@jdsieci.pl> - 1.6.6-1
-- New Upstream release
+- New 1.6 upstream release
 
 * Sat May 05 2018 Jerzy Drozdz <rpmbuilder@jdsieci.pl> - 1.6.4-2
 - Fixed missing build dependency
